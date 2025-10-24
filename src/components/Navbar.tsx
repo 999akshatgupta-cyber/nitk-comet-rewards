@@ -2,6 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import perplexityLogo from "@/assets/perplexity-logo-teal.png";
+import cometLogo from "@/assets/comet-logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,26 +20,27 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-accent to-accent/80 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">P</span>
+        <div className="flex items-center justify-between h-20">
+          <Link to="/" className="flex items-center gap-3 group">
+            <img src={cometLogo} alt="Comet" className="w-12 h-12 transition-transform group-hover:scale-110" />
+            <div className="flex items-center gap-2">
+              <img src={perplexityLogo} alt="Perplexity" className="h-6" />
+              <span className="text-sm font-medium text-muted-foreground hidden sm:inline">NITK Rewards</span>
             </div>
-            <span className="font-bold text-lg text-primary">Perplexity NITK Rewards</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 rounded-md transition-colors ${
+                className={`px-4 py-2 rounded-lg transition-all ${
                   isActive(link.path)
-                    ? "bg-accent text-accent-foreground"
-                    : "text-foreground hover:bg-secondary"
+                    ? "text-accent font-medium"
+                    : "text-foreground/80 hover:text-foreground hover:bg-secondary/50"
                 }`}
               >
                 {link.name}
@@ -49,7 +52,7 @@ const Navbar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -58,16 +61,16 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="lg:hidden py-4 border-t border-border/50">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-4 py-3 rounded-md transition-colors ${
+                className={`block px-4 py-3 rounded-lg transition-all ${
                   isActive(link.path)
-                    ? "bg-accent text-accent-foreground"
-                    : "text-foreground hover:bg-secondary"
+                    ? "text-accent font-medium bg-secondary/50"
+                    : "text-foreground/80 hover:text-foreground hover:bg-secondary/50"
                 }`}
               >
                 {link.name}

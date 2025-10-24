@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import perplexityLogo from "@/assets/perplexity-logo-teal.png";
 
 const Footer = () => {
   const navLinks = [
@@ -10,30 +11,28 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-border py-8 mt-16">
+    <footer className="border-t border-border/50 py-12 mt-24 backdrop-blur-sm bg-card/30">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-8">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-accent to-accent/80 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">P</span>
-            </div>
-            <span className="font-bold text-primary">Perplexity NITK Rewards</span>
+            <img src={perplexityLogo} alt="Perplexity" className="h-8" />
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-accent transition-colors text-sm"
               >
                 {link.name}
               </Link>
             ))}
           </div>
 
-          <div className="text-center text-sm text-muted-foreground">
-            <p>© 2025 Perplexity NITK Rewards | Affiliated with Perplexity Comet</p>
+          <div className="text-center text-sm text-muted-foreground max-w-md">
+            <p>Organized by NITK Students | Affiliated with Perplexity</p>
+            <p className="mt-2 text-xs">© 2025 Perplexity NITK Rewards</p>
           </div>
         </div>
       </div>
