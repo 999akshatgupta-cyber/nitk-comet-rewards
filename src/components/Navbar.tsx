@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import perplexityLogo from "@/assets/perplexity-logo-teal.png";
+import perplexityLogo from "@/assets/perplexity-logo-white.png";
 import cometLogo from "@/assets/comet-logo.png";
 
 const Navbar = () => {
