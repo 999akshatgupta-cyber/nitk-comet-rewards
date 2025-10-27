@@ -62,29 +62,60 @@ const Home = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              "Chandan",
-              "Shivraj",
-              "Harsh Malviya",
-              "Poojan",
-              "Prravirr Shah",
-              "Sri Harsh",
-              "Swarnim",
-              "Harshit",
-              "Aatish",
-              "Alfaiz"
-            ].map((name, index) => (
-              <div
-                key={index}
-                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-5 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 hover:border-accent/30"
-              >
-                <p className="text-lg font-medium text-foreground flex items-center gap-2">
-                  <span className="text-2xl">💸</span>
-                  <span>{name} got ₹59</span>
-                </p>
-              </div>
-            ))}
+          <div className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-3xl p-8 md:p-10 shadow-2xl max-w-3xl mx-auto">
+            <div className="flex flex-wrap items-center justify-center gap-3 text-lg text-foreground">
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Chandan</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Shivraj</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Harsh Malviya</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Poojan</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Prravirr Shah</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Sri Harsh</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Swarnim</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Harshit</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Aatish</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="flex items-center gap-2">
+                <span className="text-xl">💸</span>
+                <span className="font-medium">Alfaiz</span>
+              </span>
+              <span className="text-muted-foreground">•</span>
+              <span className="text-accent font-semibold">and many more...</span>
+            </div>
           </div>
         </div>
       </section>
