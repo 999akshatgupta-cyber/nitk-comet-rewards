@@ -50,6 +50,44 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Recent Earners Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
+              🎉 Recently People Got ₹59
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Real students who earned ₹59 instantly by referral.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              "Chandan",
+              "Shivraj",
+              "Harsh Malviya",
+              "Poojan",
+              "Prravirr Shah",
+              "Sri Harsh",
+              "Swarnim",
+              "Harshit",
+              "Aatish",
+              "Alfaiz"
+            ].map((name, index) => (
+              <div
+                key={index}
+                className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-5 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 hover:border-accent/30"
+              >
+                <p className="text-lg font-medium text-foreground flex items-center gap-2">
+                  <span className="text-2xl">💸</span>
+                  <span>{name} got ₹59</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* About Section */}
       <section className="py-20 px-4">
