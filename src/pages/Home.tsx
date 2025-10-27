@@ -1,12 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { ArrowRight, Play, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const Home = () => {
-  const scrollToVideo = () => {
-    document.getElementById("video-section")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -48,41 +43,13 @@ const Home = () => {
               </a>
             </Button>
             
-            <Button
-              onClick={scrollToVideo}
-              size="lg"
-              variant="outline"
-              className="border-2 border-border bg-card/50 hover:bg-card text-foreground backdrop-blur-sm text-lg px-10 py-7 rounded-full transition-all hover:scale-105"
-            >
-              <Play className="h-5 w-5 mr-2" />
-              Watch How It Works
-            </Button>
+            <p className="text-muted-foreground text-sm">
+              Video tutorial coming soon!
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Video Section */}
-      <section id="video-section" className="py-20 px-4">
-        <div className="container mx-auto max-w-5xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
-            See How It Works
-          </h2>
-          
-          <Card className="overflow-hidden border-2 border-accent/20 shadow-2xl shadow-accent/10 bg-card/50 backdrop-blur-sm">
-            <div className="aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/vyGe1xQ62_g"
-                title="Perplexity NITK Rewards Tutorial"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
-            </div>
-          </Card>
-        </div>
-      </section>
 
       {/* About Section */}
       <section className="py-20 px-4">
