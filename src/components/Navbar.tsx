@@ -3,26 +3,25 @@ import { Menu, X, LogOut, LogIn } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { User } from "@supabase/supabase-js";
 import { useToast } from "@/hooks/use-toast";
 import perplexityLogo from "@/assets/perplexity-logo-white.png";
 import cometLogo from "@/assets/comet-logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
