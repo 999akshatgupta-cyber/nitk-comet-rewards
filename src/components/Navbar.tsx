@@ -1,13 +1,33 @@
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, LogOut, LogIn } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
+import { useToast } from "@/hooks/use-toast";
 import perplexityLogo from "@/assets/perplexity-logo-white.png";
 import cometLogo from "@/assets/comet-logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -18,6 +38,23 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to sign out",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Signed out",
+        description: "You've been successfully signed out",
+      });
+      navigate("/");
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
@@ -46,6 +83,27 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            {user ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+                className="ml-2"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Sign Out
+              </Button>
+            ) : (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={() => navigate("/auth")}
+                className="ml-2"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Sign In
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -76,6 +134,35 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <div className="mt-3 px-4">
+              {user ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    handleSignOut();
+                    setIsOpen(false);
+                  }}
+                  className="w-full justify-start"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              ) : (
+                <Button
+                  variant="default"
+                  size="sm"
+                  onClick={() => {
+                    navigate("/auth");
+                    setIsOpen(false);
+                  }}
+                  className="w-full justify-start"
+                >
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Sign In
+                </Button>
+              )}
+            </div>
           </div>
         )}
       </div>
