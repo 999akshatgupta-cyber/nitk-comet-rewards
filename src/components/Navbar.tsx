@@ -7,14 +7,21 @@ import { useToast } from "@/hooks/use-toast";
 import perplexityLogo from "@/assets/perplexity-logo-white.png";
 import cometLogo from "@/assets/comet-logo.png";
 
+import { User } from "@supabase/supabase-js";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
+    // Only set up auth if supabase is available
+    if (!supabase) {
+      return;
+    }
+
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
@@ -39,6 +46,15 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   const handleSignOut = async () => {
+    if (!supabase) {
+      toast({
+        title: "Error",
+        description: "Auth is not configured",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const { error } = await supabase.auth.signOut();
     if (error) {
       toast({
@@ -73,11 +89,10 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 rounded-lg transition-all ${
-                  isActive(link.path)
-                    ? "text-accent font-medium"
-                    : "text-foreground/80 hover:text-foreground hover:bg-secondary/50"
-                }`}
+                className={`px-4 py-2 rounded-lg transition-all ${isActive(link.path)
+                  ? "text-accent font-medium"
+                  : "text-foreground/80 hover:text-foreground hover:bg-secondary/50"
+                  }`}
               >
                 {link.name}
               </Link>
@@ -124,11 +139,10 @@ const Navbar = () => {
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-4 py-3 rounded-lg transition-all ${
-                  isActive(link.path)
-                    ? "text-accent font-medium bg-secondary/50"
-                    : "text-foreground/80 hover:text-foreground hover:bg-secondary/50"
-                }`}
+                className={`block px-4 py-3 rounded-lg transition-all ${isActive(link.path)
+                  ? "text-accent font-medium bg-secondary/50"
+                  : "text-foreground/80 hover:text-foreground hover:bg-secondary/50"
+                  }`}
               >
                 {link.name}
               </Link>
