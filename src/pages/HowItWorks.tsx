@@ -29,7 +29,7 @@ const HowItWorks = () => {
     <div className="min-h-screen pt-32 pb-20 px-4">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
+          <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-foreground">
             How to Earn ₹59 Instantly
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -41,27 +41,27 @@ const HowItWorks = () => {
           {steps.map((step, index) => (
             <Card
               key={index}
-              className="relative overflow-hidden border-2 border-border/50 hover:border-accent/50 transition-all duration-300 bg-card/50 backdrop-blur-sm hover:shadow-xl hover:shadow-accent/10 group"
+              className="relative overflow-hidden border border-border hover:border-accent/30 transition-all duration-300 bg-card hover:shadow-lg group"
             >
               {/* Number badge */}
-              <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-accent to-accent/70 rounded-full flex items-center justify-center text-background font-bold text-xl shadow-lg group-hover:scale-110 transition-transform">
+              <div className="absolute top-6 right-6 w-10 h-10 bg-accent rounded-full flex items-center justify-center text-white font-semibold text-lg shadow-sm group-hover:scale-105 transition-transform">
                 {index + 1}
               </div>
               
               <CardContent className="pt-8 pb-8 px-6">
-                <div className="w-16 h-16 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
-                  <step.icon className="h-8 w-8 text-accent" />
+                <div className="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent/15 transition-colors">
+                  <step.icon className="h-7 w-7 text-accent" />
                 </div>
-                <h3 className="font-bold text-xl mb-3 text-foreground">{step.title}</h3>
+                <h3 className="font-semibold text-xl mb-3 text-foreground">{step.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <Card className="bg-gradient-to-br from-secondary/80 to-secondary/40 backdrop-blur-sm border-2 border-accent/20 shadow-xl">
+        <Card className="bg-secondary/30 border border-border shadow-sm">
           <CardContent className="pt-8 pb-8 px-6 md:px-8">
-            <h3 className="font-bold text-2xl mb-6 text-foreground flex items-center gap-2">
+            <h3 className="font-semibold text-2xl mb-6 text-foreground flex items-center gap-2">
               <span className="text-accent">⚠️</span> Important Notes
             </h3>
             <ul className="space-y-4">

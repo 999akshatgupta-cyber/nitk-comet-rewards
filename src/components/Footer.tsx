@@ -11,7 +11,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-border/50 py-12 mt-24 backdrop-blur-sm bg-card/30">
+    <footer className="border-t border-border py-16 mt-24 bg-secondary/20">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-8">
           <div className="flex items-center gap-3">
@@ -23,7 +23,7 @@ const Footer = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-muted-foreground hover:text-accent transition-colors text-sm"
+                className="text-muted-foreground hover:text-accent transition-colors text-sm font-medium"
               >
                 {link.name}
               </Link>
@@ -31,8 +31,11 @@ const Footer = () => {
           </div>
 
           <div className="text-center text-sm text-muted-foreground max-w-md">
-            <p>Organized by NITK Students | Affiliated with Perplexity</p>
-            <p className="mt-2 text-xs">© 2025 Perplexity NITK Rewards</p>
+            <p className="mb-3">Organized by NITK Students | Affiliated with Perplexity</p>
+            <Link to="/terms" className="text-accent hover:underline font-medium">
+              View Terms & Conditions
+            </Link>
+            <p className="mt-4 text-xs">© 2025 Perplexity NITK Rewards</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const scrollToVideo = () => {
@@ -10,33 +11,31 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 relative overflow-hidden">
-        {/* Cosmic glow effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-accent/20 rounded-full blur-[120px] pointer-events-none" />
-        
-        <div className="container mx-auto text-center relative z-10">
-          <div className="flex items-center justify-center gap-2 mb-4 text-accent">
-            <Sparkles className="h-5 w-5" />
-            <span className="text-sm uppercase tracking-wider font-medium">Only for NITK Students</span>
+      <section className="pt-32 pb-20 px-4">
+        <div className="container mx-auto text-center">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="px-4 py-2 bg-accent/10 rounded-full border border-accent/20">
+              <span className="text-sm font-medium text-accent">Only for NITK Students</span>
+            </div>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-foreground leading-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-foreground leading-tight tracking-tight">
             Earn ₹59 instantly with{" "}
-            <span className="bg-gradient-to-r from-accent to-accent/60 bg-clip-text text-transparent">
+            <span className="text-accent">
               Perplexity Comet
             </span>{" "}
             Referral
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-3xl mx-auto">
             Invite your friends and earn ₹59 in just 3 minutes
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-background font-semibold text-lg px-10 py-7 rounded-full border-2 border-accent/30 shadow-lg shadow-accent/20 transition-all hover:scale-105"
+              className="bg-accent hover:bg-accent/90 text-white font-medium text-base px-8 py-6 rounded-lg shadow-sm hover:shadow-md transition-all"
             >
               <a
                 href="https://pplx.ai/akshat-gupta-e3vj"
@@ -52,23 +51,41 @@ const Home = () => {
               onClick={scrollToVideo}
               size="lg"
               variant="outline"
-              className="border-2 border-border bg-card/50 hover:bg-card text-foreground backdrop-blur-sm text-lg px-10 py-7 rounded-full transition-all hover:scale-105"
+              className="border border-border hover:bg-secondary text-foreground text-base px-8 py-6 rounded-lg transition-all"
             >
               <Play className="h-5 w-5 mr-2" />
               Watch How It Works
             </Button>
+
+            <Button
+              asChild
+              size="lg"
+              variant="secondary"
+              className="text-base px-8 py-6 rounded-lg transition-all"
+            >
+              <Link to="/sign-in">
+                Sign in to access rewards
+                <Sparkles className="h-5 w-5 ml-2" />
+              </Link>
+            </Button>
+          </div>
+          
+          <div className="mt-8">
+            <a href="/terms" className="text-sm text-muted-foreground hover:text-accent transition-colors underline">
+              Terms & Conditions
+            </a>
           </div>
         </div>
       </section>
 
       {/* Video Section */}
-      <section id="video-section" className="py-20 px-4">
+      <section id="video-section" className="py-20 px-4 bg-secondary/30">
         <div className="container mx-auto max-w-5xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-semibold text-center mb-12 text-foreground">
             See How It Works
           </h2>
           
-          <Card className="overflow-hidden border-2 border-accent/20 shadow-2xl shadow-accent/10 bg-card/50 backdrop-blur-sm">
+          <Card className="overflow-hidden border border-border shadow-lg bg-card">
             <div className="aspect-video">
               <iframe
                 width="100%"
@@ -87,8 +104,8 @@ const Home = () => {
       {/* About Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto max-w-4xl">
-          <div className="bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm border border-border/50 rounded-3xl p-8 md:p-12 shadow-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground text-center">
+          <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-sm">
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-foreground text-center">
               About This Campaign
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed text-center">
@@ -102,12 +119,9 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 relative overflow-hidden">
-        {/* Background glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 to-transparent pointer-events-none" />
-        
-        <div className="container mx-auto text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">
+      <section className="py-20 px-4 bg-secondary/30">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl md:text-5xl font-semibold mb-6 text-foreground">
             Ready to Get Started?
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
@@ -116,7 +130,7 @@ const Home = () => {
           <Button
             asChild
             size="lg"
-            className="bg-gradient-to-r from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-background font-semibold text-lg px-12 py-7 rounded-full border-2 border-accent/30 shadow-xl shadow-accent/20 transition-all hover:scale-105"
+            className="bg-accent hover:bg-accent/90 text-white font-medium text-base px-10 py-6 rounded-lg shadow-sm hover:shadow-md transition-all"
           >
             <a
               href="https://pplx.ai/akshat-gupta-e3vj"

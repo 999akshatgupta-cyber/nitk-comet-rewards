@@ -5,8 +5,83 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Card } from "@/components/ui/card";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 const FAQ = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const parseWebhookMessage = async (response: Response): Promise<string> => {
+    try {
+      const data = await response.clone().json();
+
+      if (typeof data === "string") {
+        return data;
+      }
+
+      if (data && typeof data === "object") {
+        if ("message" in data && typeof (data as { message?: unknown }).message === "string") {
+          return (data as { message: string }).message;
+        }
+
+        return JSON.stringify(data, null, 2);
+      }
+    } catch (_) {
+      // fall through to text parsing below
+    }
+
+    try {
+      return await response.text();
+    } catch (_) {
+      return "";
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch("https://n8n.ruskmedia.in/webhook-test/5f7f6808-bb0d-468b-9086-58a60442d7fe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      const webhookMessage = (await parseWebhookMessage(response)).trim();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: webhookMessage || "Feedback sent successfully!"
+        });
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: webhookMessage || "Feedback submission failed. Please try again."
+        });
+      }
+    } catch (error) {
+      console.error("Feedback submission failed:", error);
+      setSubmitStatus({
+        type: 'error',
+        message: "Feedback submission failed. Please try again."
+      });
+    }
+  };
+
   const faqs = [
     {
       question: "What is Perplexity Comet?",
@@ -51,10 +126,10 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
+    <div className="min-h-screen pt-32 pb-16 px-4">
       <div className="container mx-auto max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
+          <h1 className="text-4xl md:text-5xl font-semibold mb-4 text-foreground">
             Frequently Asked Questions
           </h1>
           <p className="text-xl text-muted-foreground">
@@ -62,11 +137,11 @@ const FAQ = () => {
           </p>
         </div>
 
-        <Card className="p-6">
+        <Card className="p-6 border border-border shadow-sm">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left font-semibold text-primary hover:text-accent transition-colors">
+                <AccordionTrigger className="text-left font-medium text-foreground hover:text-accent transition-colors">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed">
@@ -85,6 +160,53 @@ const FAQ = () => {
           >
             Contact our team directly
           </a>
+          <div className="mt-8 max-w-md mx-auto">
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <div>
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="message">Message</Label>
+                <Textarea
+                  id="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  rows={4}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full">Submit</Button>
+              
+              {submitStatus.type === 'success' && (
+                <p className="text-green-600 text-sm text-center mt-2 whitespace-pre-wrap break-words">
+                  {submitStatus.message}
+                </p>
+              )}
+              
+              {submitStatus.type === 'error' && (
+                <p className="text-red-600 text-sm text-center mt-2 whitespace-pre-wrap break-words">
+                  {submitStatus.message}
+                </p>
+              )}
+            </form>
+          </div>
         </div>
       </div>
     </div>
