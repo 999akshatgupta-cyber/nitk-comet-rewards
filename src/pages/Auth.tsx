@@ -24,6 +24,11 @@ const Auth = () => {
   const [fullName, setFullName] = useState("");
 
   useEffect(() => {
+    // Only check auth if supabase is available
+    if (!supabase) {
+      return;
+    }
+
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
@@ -43,7 +48,16 @@ const Auth = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (!supabase) {
+      toast({
+        title: "Auth Not Configured",
+        description: "Supabase credentials are missing. Please contact the administrator.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const validatedData = authSchema.parse({ email, password, fullName });
       setLoading(true);
@@ -65,7 +79,7 @@ const Auth = () => {
         title: "Account created!",
         description: "You've been automatically logged in.",
       });
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
           title: "Validation Error",
@@ -75,7 +89,7 @@ const Auth = () => {
       } else {
         toast({
           title: "Error",
-          description: error.message || "An error occurred during sign up",
+          description: error instanceof Error ? error.message : "An error occurred during sign up",
           variant: "destructive",
         });
       }
@@ -86,7 +100,16 @@ const Auth = () => {
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (!supabase) {
+      toast({
+        title: "Auth Not Configured",
+        description: "Supabase credentials are missing. Please contact the administrator.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const validatedData = authSchema.parse({ email, password });
       setLoading(true);
@@ -102,7 +125,7 @@ const Auth = () => {
         title: "Welcome back!",
         description: "You've successfully logged in.",
       });
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
           title: "Validation Error",
@@ -112,7 +135,7 @@ const Auth = () => {
       } else {
         toast({
           title: "Error",
-          description: error.message || "Invalid email or password",
+          description: error instanceof Error ? error.message : "Invalid email or password",
           variant: "destructive",
         });
       }
@@ -134,7 +157,7 @@ const Auth = () => {
               <TabsTrigger value="signin">Sign In</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
-            
+
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4 mt-4">
                 <div className="space-y-2">
@@ -164,7 +187,7 @@ const Auth = () => {
                 </Button>
               </form>
             </TabsContent>
-            
+
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4 mt-4">
                 <div className="space-y-2">
