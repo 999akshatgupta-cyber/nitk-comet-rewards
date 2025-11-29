@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import perplexityLogo from "@/assets/perplexity-logo-teal.png";
+import perplexityLogo from "@/assets/perplexity-logo-white.png";
 
 const Footer = () => {
   const navLinks = [
